@@ -3,17 +3,17 @@ import moment from 'moment';
 import './calendar.css';
 
 export default class Calendar extends React.Component {
-  constructor(props) {
-    super(props);
-    this.width = props.width || '350px';
-    this.style = props.style || {};
-  }
-
   state = {
     dateContext: moment(),
     today: moment(),
     showMonthPopup: false,
     showYearPopup: false
+  }
+
+  constructor(props) {
+    super(props);
+    this.width = props.width || '350px';
+    this.style = props.style || {};
   }
 
   weekdays = moment.weekdays();
@@ -36,10 +36,32 @@ export default class Calendar extends React.Component {
     return this.state.dateContext.format("D");
   }
 
+  firstDayOfMonth = () => {
+    let dateContext = this.state.dateContext;
+    let firstDay = moment(dateContext).startOf("month").format("d");
+    return firstDay;
+  }
+
   render() {
+    let weekdays = this.weekdaysShort.map(day => {
+      return (
+        <td key={day} className="week-day">{day}</td>
+      );
+    });
+
     return (
       <div className="calendar-container">
-        <h2>Calendar</h2>
+        <table className="calendar">
+          <thead>
+            <tr className="calendar-header">
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {weekdays}
+            </tr>
+          </tbody>
+        </table>
       </div>
     );
   }
