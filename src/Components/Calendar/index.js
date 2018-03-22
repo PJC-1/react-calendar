@@ -49,6 +49,56 @@ export default class Calendar extends React.Component {
       );
     });
 
+    let blanks = [];
+    for (let i = 0; i < this.firstDayOfMonth(); i++) {
+      blanks.push(
+        <td key={i * 80} className="emptySlot">
+          {""}
+        </td>
+      );
+    }
+
+    console.log("blanks: ", blanks);
+
+    let daysInMonth = [];
+    for (let d = 1; d <= this.daysInMonth(); d++) {
+      let className = (d == this.currentDay() ? "day current-day" : "day");
+      daysInMonth.push(
+        <td key={d} className={className} >
+          <span>{d}</span>
+        </td>
+      );
+    }
+
+    console.log("days: ", daysInMonth);
+
+    var totalSlots = [...blanks, ...daysInMonth];
+    let rows = [];
+    let cells = [];
+
+    totalSlots.forEach((row, i) => {
+      if ((i % 7) !== 0) {
+        cells.push(row);
+      } else {
+        let insertRow = cells.slice();
+        rows.push(insertRow);
+        cells = [];
+        cells.push(row);
+      }
+      if (i === totalSlots.length -1) {
+        let insertRow = cells.slice();
+        rows.push(insertRow);
+      }
+    });
+
+    let trElements = rows.map((d, i) => {
+      return (
+        <tr key={i * 100}>
+          {d}
+        </tr>
+      );
+    });
+
     return (
       <div className="calendar-container">
         <table className="calendar">
@@ -60,6 +110,7 @@ export default class Calendar extends React.Component {
             <tr>
               {weekdays}
             </tr>
+            {trElements}
           </tbody>
         </table>
       </div>
