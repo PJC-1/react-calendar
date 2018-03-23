@@ -14,6 +14,7 @@ export default class Calendar extends React.Component {
     super(props);
     this.width = props.width || '350px';
     this.style = props.style || {};
+    this.style.width = this.width;
   }
 
   weekdays = moment.weekdays();
@@ -100,7 +101,7 @@ export default class Calendar extends React.Component {
     });
 
     return (
-      <div className="calendar-container">
+      <div className="calendar-container" style={this.style}>
         <table className="calendar">
           <thead>
             <tr className="calendar-header">
