@@ -60,9 +60,18 @@ export default class Calendar extends React.Component {
     );
   }
 
+  onChangeMonth = (e, month) => {
+    this.setState({
+      showMonthPopup: !this.state.showMonthPopup
+    });
+  }
+
   MonthNav = () => {
     return (
-      <span className="label-month">
+      <span
+        className="label-month"
+        onClick={e => {this.onChangeMonth(e, this.month())}}
+      >
         {this.month()}
         {this.state.showMonthPopup &&
           <this.SelectList data={this.months} />
