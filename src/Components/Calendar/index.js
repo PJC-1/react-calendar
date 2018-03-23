@@ -64,7 +64,9 @@ export default class Calendar extends React.Component {
     return (
       <span className="label-month">
         {this.month()}
-        <this.SelectList data={this.months} />
+        {this.state.showMonthPopup &&
+          <this.SelectList data={this.months} />
+        }
       </span>
     );
   }
