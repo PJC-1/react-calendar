@@ -57,6 +57,24 @@ export default class Calendar extends React.Component {
     this.props.onMonthChange && this.props.onMonthChange();
   }
 
+  nextMonth = () => {
+    let dateContext = Object.assign({}, this.state.dateContext);
+    dateContext = moment(dateContext).add(1, "month");
+    this.setState({
+      dateContext: dateContext
+    });
+    this.props.onNextMonth && this.props.onNextMonth();
+  }
+
+  prevMonth = () => {
+    let dateContext = Object.assign({}, this.state.dateContext);
+    dateContext = moment(dateContext).subtract(1, "month");
+    this.setState({
+      dateContext: dateContext
+    });
+    this.props.onPrevMonth && this.props.onPrevMonth();
+  }
+
   SelectList = (props) => {
     let popup = props.data.map(data => {
       return (
@@ -111,6 +129,15 @@ export default class Calendar extends React.Component {
   onYearChange = (e) => {
     this.setYear(e.target.value);
     this.props.onYearChange && this.props.onYearChange(e, e.target.value);
+  }
+
+  onKeyUpYear = (e) => {
+    if (e.which === 13 || e.which === 27) {
+      this.setYear(e.target.value);
+      this.setState({
+        showYearNav: false
+      });
+    }
   }
 
   YearNav = () => {
@@ -201,6 +228,14 @@ export default class Calendar extends React.Component {
                 <this.MonthNav />
                 {" "}
                 <this.YearNav />
+              </td>
+              <td colSpan="2" className="nav-month">
+                <i className="prev fa fa-fw fa-chevron-left"
+                  onClick={(e) => {this.prevMonth()}}>
+                </i>
+                <i className="prev fa fa-fw fa-chevron-right"
+                  onClick={(e) => {this.nextMonth()}}>
+                </i>
               </td>
             </tr>
           </thead>
