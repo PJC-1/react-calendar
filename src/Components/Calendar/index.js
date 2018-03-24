@@ -162,6 +162,10 @@ export default class Calendar extends React.Component {
     );
   }
 
+  onDayClick = (e, day) => {
+    this.props.onDayClick && this.props.onDayClick(e, day);
+  }
+
   render() {
     let weekdays = this.weekdaysShort.map(day => {
       return (
@@ -185,7 +189,7 @@ export default class Calendar extends React.Component {
       let className = (d === this.currentDay() ? "day current-day" : "day");
       daysInMonth.push(
         <td key={d} className={className} >
-          <span>{d}</span>
+          <span onClick={(e) => {this.onDayClick(e, d)}}>{d}</span>
         </td>
       );
     }
