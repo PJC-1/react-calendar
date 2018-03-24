@@ -43,11 +43,25 @@ export default class Calendar extends React.Component {
     return firstDay;
   }
 
+  setMonth = (month) => {
+    let monthNo = this.months.indexOf(month);
+    let dateContext = Object.assign({}, this.state.dateContext);
+    dateContext = moment(dateContext).set("month", monthNo);
+    this.setState({
+      dateContext: dateContext
+    });
+  }
+
+  onSelectChange = (e, data) => {
+    this.setMonth(data);
+    this.props.onMonthChange && this.props.onMonthChange();
+  }
+
   SelectList = (props) => {
     let popup = props.data.map(data => {
       return (
         <div key={data}>
-          <a href="#">
+          <a href="#" onClick={(e) => {this.onSelectChange(e, data)}}>
             {data}
           </a>
         </div>
@@ -100,7 +114,7 @@ export default class Calendar extends React.Component {
 
     let daysInMonth = [];
     for (let d = 1; d <= this.daysInMonth(); d++) {
-      let className = (d == this.currentDay() ? "day current-day" : "day");
+      let className = (d === this.currentDay() ? "day current-day" : "day");
       daysInMonth.push(
         <td key={d} className={className} >
           <span>{d}</span>
