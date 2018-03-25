@@ -35,10 +35,27 @@ export default class Calendar extends React.Component {
     return this.state.dateContext.format("D");
   }
 
+  firstDayOfMonth = () => {
+    let dateContext = this.state.dateContext;
+    let firstDay = moment(dateContext).startOf('month').format('d');
+    return firstDay;
+  }
+
   render() {
+    let weekdays = this.weekdaysShort.map(day => <td key={day} className="week-day">{day}</td>);
     return (
       <div className="calendar-container">
-        <h2>Calendar</h2>
+        <table className="calendar">
+          <thead>
+            <tr className="calendar-header">
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {weekdays}
+            </tr>
+          </tbody>
+        </table>
       </div>
     );
   }
