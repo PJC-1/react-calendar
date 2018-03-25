@@ -7,13 +7,32 @@ export default class Calendar extends React.Component {
     super(props);
     this.width = props.width || "350px";
     this.style = props.style || {};
+    this.state = {
+      dateContext: moment(),
+      today: moment(),
+      showMonthPopup: false,
+      showYearPopup: false
+    };
   }
 
-  state = {
-    momentContext: moment(),
-    today: moment(),
-    showMonthPopup: false,
-    showYearPopup: false
+  weekdays = moment.weekdays();
+  weekdaysShort = moment.weekdaysShort();
+  months = moment.months();
+
+  year = () => {
+    return this.state.dateContext.format("Y");
+  }
+  month = () => {
+    return this.state.dateContext.format("MMMM");
+  }
+  daysInMonth = () => {
+    return this.state.dateContext.daysInMonth();
+  }
+  currentDate = () => {
+    return this.state.dateContext.get("date");
+  }
+  currentDay = () => {
+    return this.state.dateContext.format("D");
   }
 
   render() {
