@@ -42,6 +42,35 @@ export default class Calendar extends React.Component {
     return firstDay;
   }
 
+  SelectList = (props) => {
+    let popup = props.data.map((data) => {
+      return (
+        <div key={data}>
+          <a href="#">
+            {data}
+          </a>
+        </div>
+      );
+    });
+    return (
+      <div className="month-popup">
+        {popup}
+      </div>
+    );
+  }
+
+  MonthNav = () => {
+    return (
+      <span className="label-month"
+        onClick={(e) => {this.onChangeMonth((e), this.month())}}>
+        {this.month()}
+        {this.state.showMonthPopup &&
+          <this.SelectList data={this.months} />
+        }
+      </span>
+    );
+  }
+
   render() {
     let weekdays = this.weekdaysShort.map(day => <td key={day} className="week-day">{day}</td>);
 
@@ -101,6 +130,7 @@ export default class Calendar extends React.Component {
           <thead>
             <tr className="calendar-header">
               <td colSpan="5">
+                <this.MonthNav />
               </td>
             </tr>
           </thead>
