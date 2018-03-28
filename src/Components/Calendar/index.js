@@ -61,8 +61,7 @@ export default class Calendar extends React.Component {
 
   MonthNav = () => {
     return (
-      <span className="label-month"
-        onClick={(e) => {this.onChangeMonth((e), this.month())}}>
+      <span className="label-month">
         {this.month()}
         {this.state.showMonthPopup &&
           <this.SelectList data={this.months} />
@@ -87,7 +86,7 @@ export default class Calendar extends React.Component {
 
     let daysInMonth = [];
     for (let d = 1; d < this.daysInMonth(); d++) {
-      let className = (d === this.currentDay() ? "day current-day": "day");
+      let className = (d == this.currentDay() ? "day current-day": "day");
       daysInMonth.push(
         <td key={d} className={className} >
           <span>{d}</span>
